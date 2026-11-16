@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="YTECH HOTEL - Luxury, comfort and unforgettable hospitality in Injibara, Ethiopia.">
+  <title>YTECH HOTEL | Luxury & Comfort</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <a href="#home" class="logo">
+      <span class="logo-mark">Y</span>
+      <span>YTECH<small>HOTEL</small></span>
+    </a>
+
+    <button class="menu-toggle" id="menuToggle" aria-label="Open menu">☰</button>
+
+    <nav id="navMenu">
+      <a href="#home">Home</a>
+      <a href="#rooms">Rooms</a>
+      <a href="#about">About</a>
+      <a href="#restaurant">Restaurant</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#contact">Contact</a>
+      <a href="#booking" class="nav-book">Book Now</a>
+    </nav>
+  </header>
+
+  <!-- HERO SLIDESHOW -->
+  <section class="hero" id="home">
+
+    <div class="hero-slides">
+      <div class="hero-slide active">
+        <img src="gallery1.jpg" alt="YTECH Hotel view">
+      </div>
+      <div class="hero-slide">
+        <img src="room1.jpg" alt="YTECH Hotel deluxe room">
+      </div>
+      <div class="hero-slide">
+        <img src="gallery2.jpg" alt="YTECH Hotel interior">
+      </div>
+      <div class="hero-slide">
+        <img src="room2.jpg" alt="YTECH Hotel executive room">
+      </div>
+      <div class="hero-slide">
+        <img src="gallery3.jpg" alt="YTECH Hotel gallery">
+      </div>
+      <div class="hero-slide">
+        <img src="room3.jpg" alt="YTECH Hotel suite">
+      </div>
+    </div>
+
+    <div class="hero-overlay"></div>
+
+    <div class="hero-content">
+      <p class="eyebrow">WELCOME TO YTECH HOTEL</p>
+      <h1>EXPERIENCE<br>LUXURY & COMFORT</h1>
+      <p>Discover elegance, comfort and unforgettable hospitality.</p>
+      <a href="#rooms" class="gold-btn">EXPLORE OUR ROOMS</a>
+    </div>
+
+    <div class="slider-dots" id="sliderDots">
+      <button class="dot active" data-slide="0" aria-label="Slide 1"></button>
+      <button class="dot" data-slide="1" aria-label="Slide 2"></button>
+      <button class="dot" data-slide="2" aria-label="Slide 3"></button>
+      <button class="dot" data-slide="3" aria-label="Slide 4"></button>
+      <button class="dot" data-slide="4" aria-label="Slide 5"></button>
+      <button class="dot" data-slide="5" aria-label="Slide 6"></button>
+    </div>
+
+    <div class="hero-bottom">
+      <span>INJIBARA, ETHIOPIA</span>
+      <span>EST. YTECH HOTEL</span>
+    </div>
+  </section>
+
+  <!-- BOOKING FORM -->
+  <section class="booking-section" id="booking">
+    <form class="booking-box" id="bookingForm">
+
+      <div class="booking-field">
+        <label for="checkin">CHECK IN</label>
+        <input type="date" id="checkin" required>
+      </div>
+
+      <div class="booking-field">
+        <label for="checkout">CHECK OUT</label>
+        <input type="date" id="checkout" required>
+      </div>
+
+      <div class="booking-field">
+        <label for="guests">GUESTS</label>
+        <select id="guests" required>
+          <option value="1 Guest">1 Guest</option>
+          <option value="2 Guests" selected>2 Guests</option>
+          <option value="3 Guests">3 Guests</option>
+          <option value="4 Guests">4 Guests</option>
+          <option value="5 Guests">5 Guests</option>
+          <option value="6 Guests">6 Guests</option>
+        </select>
+      </div>
+
+      <button type="submit" class="check-btn">CHECK AVAILABILITY</button>
+    </form>
+  </section>
+
+  <!-- BOOKING MODAL -->
+  <div class="booking-modal" id="bookingModal" aria-hidden="true">
+    <div class="booking-modal-content" role="dialog" aria-modal="true" aria-labelledby="bookingTitle">
+      <button type="button" class="close-modal" id="closeModal" aria-label="Close">×</button>
+
+      <div class="modal-icon">✦</div>
+      <p class="eyebrow">YTECH HOTEL</p>
+      <h2 id="bookingTitle">Complete Your Booking</h2>
+      <p class="modal-description">Choose your preferred method to send your reservation.</p>
+
+      <div class="booking-summary" id="bookingSummary"></div>
+
+      <button type="button" class="method-btn whatsapp-btn" id="whatsappBooking">
+        <span>●</span> BOOK THROUGH WHATSAPP
+      </button>
+
+      <button type="button" class="method-btn sms-btn" id="smsBooking">
+        <span>✉</span> BOOK THROUGH SMS
+      </button>
+
+      <p class="modal-footer">Thank you for choosing YTECH HOTEL.</p>
+    </div>
+  </div>
+
+  <!-- WELCOME -->
+  <section class="welcome section-padding">
+    <p class="eyebrow">DISCOVER YTECH HOTEL</p>
+    <h2>Where Luxury Meets Comfort</h2>
+    <div class="gold-line"></div>
+    <p class="welcome-text">
+      Welcome to YTECH HOTEL, where exceptional hospitality meets modern elegance.
+      Enjoy a relaxing environment, beautiful accommodation and unforgettable
+      moments in Injibara, Ethiopia.
+    </p>
+  </section>
+
+  <!-- ROOMS -->
+  <section class="rooms section-padding" id="rooms">
+    <div class="section-heading">
+      <p class="eyebrow">ACCOMMODATION</p>
+      <h2>Our Rooms & Suites</h2>
+      <div class="gold-line"></div>
+      <p>Find the perfect space for your stay.</p>
+    </div>
+
+    <div class="room-grid">
+      <article class="room-card">
+        <div class="room-image">
+          <img src="room1.jpg" alt="Deluxe Hotel Room">
+        </div>
+        <div class="room-info">
+          <span class="room-label">COMFORT & STYLE</span>
+          <h3>Deluxe Room</h3>
+          <p>Enjoy a relaxing stay in our beautifully designed deluxe accommodation.</p>
+          <a href="#booking">BOOK NOW →</a>
+        </div>
+      </article>
+
+      <article class="room-card">
+        <div class="room-image">
+          <img src="room2.jpg" alt="Executive Hotel Room">
+        </div>
+        <div class="room-info">
+          <span class="room-label">PREMIUM STAY</span>
+          <h3>Executive Room</h3>
+          <p>Experience elegance and extra comfort in every detail.</p>
+          <a href="#booking">BOOK NOW →</a>
+        </div>
+      </article>
+
+      <article class="room-card">
+        <div class="room-image">
+          <img src="room3.jpg" alt="Presidential Suite">
+        </div>
+        <div class="room-info">
+          <span class="room-label">LUXURY LIVING</span>
+          <h3>Presidential Suite</h3>
+          <p>A special experience with premium space and beautiful design.</p>
+          <a href="#booking">BOOK NOW →</a>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about section-padding" id="about">
+    <div class="about-image">
+      <img src="about.jpg" alt="YTECH Hotel Interior">
+      <div class="about-image-label">
+        <span>YTECH</span>
+        <small>HOSPITALITY & COMFORT</small>
+      </div>
+    </div>
+
+    <div class="about-content">
+      <p class="eyebrow">ABOUT OUR HOTEL</p>
+      <h2>A New Standard of Hospitality</h2>
+      <div class="gold-line"></div>
+      <p>
+        YTECH HOTEL welcomes you to experience comfort, quality and outstanding hospitality.
+      </p>
+      <p>
+        Located in Injibara, Ethiopia, our hotel offers a relaxing environment
+        for guests, families and business travelers.
+      </p>
+      <a href="#contact" class="gold-btn">CONTACT US</a>
+    </div>
+  </section>
+
+  <!-- RESTAURANT -->
+  <section class="restaurant" id="restaurant">
+    <img src="gallery4.jpg" alt="YTECH Hotel Restaurant">
+    <div class="restaurant-overlay">
+      <p class="eyebrow">DINING EXPERIENCE</p>
+      <h2>Delicious Moments,<br>Beautiful Memories</h2>
+      <p>Enjoy wonderful moments at YTECH HOTEL.</p>
+      <a href="#contact" class="gold-btn">CONTACT US</a>
+    </div>
+  </section>
+  <!-- GALLERY -->
+  <section class="gallery section-padding" id="gallery">
+    <div class="section-heading">
+      <p class="eyebrow">EXPLORE OUR HOTEL</p>
+      <h2>Our Gallery</h2>
+      <div class="gold-line"></div>
+      <p>Discover the beauty and comfort of YTECH HOTEL.</p>
+    </div>
+
+    <div class="gallery-grid">
+      <img src="gallery1.jpg" alt="YTECH Hotel Gallery 1">
+      <img src="gallery2.jpg" alt="YTECH Hotel Gallery 2">
+      <img src="gallery3.jpg" alt="YTECH Hotel Gallery 3">
+      <img src="gallery4.jpg" alt="YTECH Hotel Gallery 4">
+      <img src="gallery5.jpg" alt="YTECH Hotel Gallery 5">
+      <img src="gallery6.jpg" alt="YTECH Hotel Gallery 6">
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact section-padding" id="contact">
+    <div class="section-heading">
+      <p class="eyebrow">GET IN TOUCH</p>
+      <h2>Contact & Reservations</h2>
+      <div class="gold-line"></div>
+      <p>We are ready to welcome you.</p>
+    </div>
+
+    <div class="contact-grid">
+      <div class="contact-item">
+        <span>⌖</span>
+        <h3>Our Location</h3>
+        <p>Injibara, Ethiopia</p>
+      </div>
+
+      <div class="contact-item">
+        <span>☎</span>
+        <h3>Call Us</h3>
+        <a href="tel:0967916468">0967916468</a>
+      </div>
+
+      <div class="contact-item">
+        <span>✉</span>
+        <h3>Reservations</h3>
+        <p>Book your stay with us.</p>
+      </div>
+    </div>
+
+    <a href="https://wa.me/251967916468" class="gold-btn contact-btn" target="_blank" rel="noopener">
+      CONTACT ON WHATSAPP
+    </a>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-grid">
+
+      <div class="footer-about">
+        <h2 class="footer-logo">YTECH HOTEL</h2>
+        <p>
+          Experience luxury, comfort and unforgettable hospitality in Injibara, Ethiopia.
+        </p>
+      </div>
+
+      <div>
+        <h3>QUICK LINKS</h3>
+        <a href="#home">Home</a>
+        <a href="#rooms">Our Rooms</a>
+        <a href="#about">About Us</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#contact">Contact Us</a>
+      </div>
+
+      <div>
+        <h3>CONTACT INFORMATION</h3>
+        <p>Injibara, Ethiopia</p>
+        <a href="tel:0967916468">0967916468</a>
+        <a href="https://wa.me/251967916468" target="_blank" rel="noopener">WhatsApp</a>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      <p>© <span id="year"></span> YTECH HOTEL. All Rights Reserved.</p>
+      <p class="developer-credit">
+        Design and Development by <strong>Y Tech Digital Solution</strong>
+      </p>
+    </div>
+  </footer>
+
+  <!-- FLOATING WHATSAPP -->
+  <a class="whatsapp" href="https://wa.me/251967916468" target="_blank" rel="noopener" aria-label="WhatsApp">☎</a>
+
+  <script src="script.js"></script>
+</body>
+</html>
