@@ -7,7 +7,10 @@
 const hotelPhone = "0967916468";
 const whatsappNumber = "251967916468";
 
-/* MOBILE NAVIGATION */
+
+/* ==============================
+   MOBILE NAVIGATION
+============================== */
 
 const menuToggle = document.getElementById("menuToggle");
 const navMenu = document.getElementById("navMenu");
@@ -15,7 +18,6 @@ const navMenu = document.getElementById("navMenu");
 if (menuToggle && navMenu) {
   menuToggle.addEventListener("click", () => {
     navMenu.classList.toggle("show");
-
     menuToggle.textContent =
       navMenu.classList.contains("show") ? "✕" : "☰";
   });
@@ -28,44 +30,45 @@ if (menuToggle && navMenu) {
   });
 }
 
+
 /* ==============================
    HERO AUTOMATIC SLIDESHOW
 ============================== */
 
-const slides = document.querySelectorAll(".hero-slide");
-const dots = document.querySelectorAll(".dot");
+const heroSlides = document.querySelectorAll(".hero-slide");
+const heroDots = document.querySelectorAll(".dot");
 
 let currentSlide = 0;
 let slideTimer;
 
 function showSlide(index) {
-  if (slides.length === 0) return;
+  if (heroSlides.length === 0) return;
 
-  currentSlide = (index + slides.length) % slides.length;
+  currentSlide =
+    (index + heroSlides.length) % heroSlides.length;
 
-  slides.forEach((slide, i) => {
+  heroSlides.forEach((slide, i) => {
     slide.classList.toggle("active", i === currentSlide);
   });
 
-  dots.forEach((dot, i) => {
+  heroDots.forEach((dot, i) => {
     dot.classList.toggle("active", i === currentSlide);
   });
 }
 
 function startSlideshow() {
-  if (slides.length <= 1) return;
-
   clearInterval(slideTimer);
+
+  if (heroSlides.length <= 1) return;
 
   slideTimer = setInterval(() => {
     showSlide(currentSlide + 1);
   }, 5000);
 }
 
-dots.forEach(dot => {
+heroDots.forEach(dot => {
   dot.addEventListener("click", () => {
     const slideNumber = Number(dot.dataset.slide);
-
     showSlide(slideNumber);
     startSlideshow();
   });
@@ -73,6 +76,7 @@ dots.forEach(dot => {
 
 showSlide(0);
 startSlideshow();
+
 
 /* ==============================
    BOOKING DATE SETTINGS
@@ -103,6 +107,7 @@ if (checkin && checkout) {
   });
 }
 
+
 /* ==============================
    BOOKING MODAL
 ============================== */
@@ -116,15 +121,17 @@ const smsBooking = document.getElementById("smsBooking");
 
 let bookingMessage = "";
 
-/* OPEN BOOKING FORM FROM BOOK NOW LINKS */
+
+/* BOOK NOW LINKS */
 
 document.querySelectorAll('a[href="#booking"]').forEach(link => {
   link.addEventListener("click", () => {
     if (checkin) {
-      checkin.focus();
+      setTimeout(() => checkin.focus(), 500);
     }
   });
 });
+
 
 /* ==============================
    CHECK AVAILABILITY
@@ -133,6 +140,11 @@ document.querySelectorAll('a[href="#booking"]').forEach(link => {
 if (bookingForm) {
   bookingForm.addEventListener("submit", function(event) {
     event.preventDefault();
+
+    if (!checkin  !checkout  !guests) {
+      alert("Booking form fields are missing.");
+      return;
+    }
 
     const inDate = checkin.value;
     const outDate = checkout.value;
@@ -152,10 +164,7 @@ if (bookingForm) {
       alert("Check-out date must be after check-in date.");
       return;
     }
-
-    /* CREATE BOOKING MESSAGE */
-
-    bookingMessage =
+     bookingMessage =
       "Hello YTECH HOTEL!\n\n" +
       "I would like to make a room reservation.\n\n" +
       "HOTEL: YTECH HOTEL\n" +
@@ -166,23 +175,26 @@ if (bookingForm) {
       "Please confirm room availability and prices.\n\n" +
       "Thank you!";
 
-    /* SHOW BOOKING DETAILS */
+    if (bookingSummary) {
+      bookingSummary.innerHTML =
+        "<strong>YOUR RESERVATION DETAILS</strong><br>" +
+        "Hotel: YTECH HOTEL<br>" +
+        "Location: Injibara, Ethiopia<br>" +
+        "Check-in: " + inDate + "<br>" +
+        "Check-out: " + outDate + "<br>" +
+        "Guests: " + guestCount;
+    }
 
-    bookingSummary.innerHTML =
-      "<strong>YOUR RESERVATION DETAILS</strong><br>" +
-      "Hotel: YTECH HOTEL<br>" +
-      "Location: Injibara, Ethiopia<br>" +
-      "Check-in: " + inDate + "<br>" +
-      "Check-out: " + outDate + "<br>" +
-      "Guests: " + guestCount;
-
-    /* OPEN BOOKING OPTIONS */
-
-    bookingModal.classList.add("show");
-    bookingModal.setAttribute("aria-hidden", "false");
-    document.body.style.overflow = "hidden";
+    if (bookingModal) {
+      bookingModal.classList.add("show");
+      bookingModal.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+    } else {
+      alert("Booking window is missing from the HTML.");
+    }
   });
 }
+
 
 /* ==============================
    CLOSE BOOKING MODAL
@@ -214,6 +226,7 @@ document.addEventListener("keydown", function(event) {
   }
 });
 
+
 /* ==============================
    WHATSAPP BOOKING
 ============================== */
@@ -231,6 +244,7 @@ if (whatsappBooking) {
     window.open(whatsappURL, "_blank");
   });
 }
+
 
 /* ==============================
    SMS BOOKING
@@ -250,6 +264,81 @@ if (smsBooking) {
   });
 }
 
+
+/* ==============================
+   GALLERY SLIDESHOW
+============================== */
+
+const galleryPhotos = document.querySelectorAll(".gallery-photo");
+const galleryNext = document.getElementById("galleryNext");
+const galleryPrev = document.getElementById("galleryPrev");
+const galleryDotsContainer = document.getElementById("galleryDots");
+
+let galleryIndex = 0;
+let galleryTimer;
+let galleryDotButtons = [];
+
+if (galleryPhotos.length > 0) {
+
+  if (galleryDotsContainer) {
+    galleryPhotos.forEach((photo, index) => {
+      const dot = document.createElement("button");
+
+      dot.className = "gallery-dot";
+      dot.type = "button";
+      dot.setAttribute("aria-label", "Show gallery photo " + (index + 1));
+
+      dot.addEventListener("click", () => {
+        showGalleryPhoto(index);
+        restartGalleryTimer();
+      });
+
+      galleryDotsContainer.appendChild(dot);
+      galleryDotButtons.push(dot);
+    });
+  }
+
+  function showGalleryPhoto(index) {
+    galleryIndex =
+      (index + galleryPhotos.length) % galleryPhotos.length;
+
+    galleryPhotos.forEach((photo, i) => {
+      photo.classList.toggle("active", i === galleryIndex);
+    });
+
+    galleryDotButtons.forEach((dot, i) => {
+      dot.classList.toggle("active", i === galleryIndex);
+    });
+  }
+
+  function restartGalleryTimer() {
+    clearInterval(galleryTimer);
+
+    if (galleryPhotos.length <= 1) return;
+
+    galleryTimer = setInterval(() => {
+      showGalleryPhoto(galleryIndex + 1);
+    }, 5000);
+  }
+
+  if (galleryNext) {
+    galleryNext.addEventListener("click", () => {
+      showGalleryPhoto(galleryIndex + 1);
+      restartGalleryTimer();
+    });
+  }
+   if (galleryPrev) {
+    galleryPrev.addEventListener("click", () => {
+      showGalleryPhoto(galleryIndex - 1);
+      restartGalleryTimer();
+    });
+  }
+
+  showGalleryPhoto(0);
+  restartGalleryTimer();
+}
+
+
 /* ==============================
    FOOTER CURRENT YEAR
 ============================== */
@@ -260,54 +349,7 @@ if (yearElement) {
   yearElement.textContent = new Date().getFullYear();
 }
 
+
 /* ==============================
    END YTECH HOTEL JAVASCRIPT
 ============================== */
-/* GALLERY SLIDESHOW */
-
-const galleryPhotos = document.querySelectorAll(".gallery-photo");
-const galleryNext = document.getElementById("galleryNext");
-const galleryPrev = document.getElementById("galleryPrev");
-const galleryDots = document.getElementById("galleryDots");
-
-let galleryIndex = 0;
-let galleryTimer;
-
-galleryPhotos.forEach((photo, index) => {
-  const dot = document.createElement("button");
-  dot.className = "gallery-dot";
-  dot.addEventListener("click", () => showGalleryPhoto(index));
-  galleryDots.appendChild(dot);
-});
-
-const dots = galleryDots.querySelectorAll(".gallery-dot");
-
-function showGalleryPhoto(index) {
-  galleryPhotos[galleryIndex].classList.remove("active");
-  dots[galleryIndex].classList.remove("active");
-
-  galleryIndex = (index + galleryPhotos.length) % galleryPhotos.length;
-
-  galleryPhotos[galleryIndex].classList.add("active");
-  dots[galleryIndex].classList.add("active");
-}
-
-galleryNext.addEventListener("click", () => {
-  showGalleryPhoto(galleryIndex + 1);
-  restartGalleryTimer();
-});
-
-galleryPrev.addEventListener("click", () => {
-  showGalleryPhoto(galleryIndex - 1);
-  restartGalleryTimer();
-});
-
-function restartGalleryTimer() {
-  clearInterval(galleryTimer);
-  galleryTimer = setInterval(() => {
-    showGalleryPhoto(galleryIndex + 1);
-  }, 5000);
-}
-
-showGalleryPhoto(0);
-restartGalleryTimer();
