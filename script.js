@@ -263,3 +263,51 @@ if (yearElement) {
 /* ==============================
    END YTECH HOTEL JAVASCRIPT
 ============================== */
+/* GALLERY SLIDESHOW */
+
+const galleryPhotos = document.querySelectorAll(".gallery-photo");
+const galleryNext = document.getElementById("galleryNext");
+const galleryPrev = document.getElementById("galleryPrev");
+const galleryDots = document.getElementById("galleryDots");
+
+let galleryIndex = 0;
+let galleryTimer;
+
+galleryPhotos.forEach((photo, index) => {
+  const dot = document.createElement("button");
+  dot.className = "gallery-dot";
+  dot.addEventListener("click", () => showGalleryPhoto(index));
+  galleryDots.appendChild(dot);
+});
+
+const dots = galleryDots.querySelectorAll(".gallery-dot");
+
+function showGalleryPhoto(index) {
+  galleryPhotos[galleryIndex].classList.remove("active");
+  dots[galleryIndex].classList.remove("active");
+
+  galleryIndex = (index + galleryPhotos.length) % galleryPhotos.length;
+
+  galleryPhotos[galleryIndex].classList.add("active");
+  dots[galleryIndex].classList.add("active");
+}
+
+galleryNext.addEventListener("click", () => {
+  showGalleryPhoto(galleryIndex + 1);
+  restartGalleryTimer();
+});
+
+galleryPrev.addEventListener("click", () => {
+  showGalleryPhoto(galleryIndex - 1);
+  restartGalleryTimer();
+});
+
+function restartGalleryTimer() {
+  clearInterval(galleryTimer);
+  galleryTimer = setInterval(() => {
+    showGalleryPhoto(galleryIndex + 1);
+  }, 5000);
+}
+
+showGalleryPhoto(0);
+restartGalleryTimer();
