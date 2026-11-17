@@ -7,10 +7,7 @@
 const hotelPhone = "0967916468";
 const whatsappNumber = "251967916468";
 
-
-/* ==============================
-   MOBILE NAVIGATION
-============================== */
+/* MOBILE NAVIGATION */
 
 const menuToggle = document.getElementById("menuToggle");
 const navMenu = document.getElementById("navMenu");
@@ -18,6 +15,7 @@ const navMenu = document.getElementById("navMenu");
 if (menuToggle && navMenu) {
   menuToggle.addEventListener("click", () => {
     navMenu.classList.toggle("show");
+
     menuToggle.textContent =
       navMenu.classList.contains("show") ? "✕" : "☰";
   });
@@ -30,45 +28,44 @@ if (menuToggle && navMenu) {
   });
 }
 
-
 /* ==============================
    HERO AUTOMATIC SLIDESHOW
 ============================== */
 
-const heroSlides = document.querySelectorAll(".hero-slide");
-const heroDots = document.querySelectorAll(".dot");
+const slides = document.querySelectorAll(".hero-slide");
+const dots = document.querySelectorAll(".dot");
 
 let currentSlide = 0;
 let slideTimer;
 
 function showSlide(index) {
-  if (heroSlides.length === 0) return;
+  if (slides.length === 0) return;
 
-  currentSlide =
-    (index + heroSlides.length) % heroSlides.length;
+  currentSlide = (index + slides.length) % slides.length;
 
-  heroSlides.forEach((slide, i) => {
+  slides.forEach((slide, i) => {
     slide.classList.toggle("active", i === currentSlide);
   });
 
-  heroDots.forEach((dot, i) => {
+  dots.forEach((dot, i) => {
     dot.classList.toggle("active", i === currentSlide);
   });
 }
 
 function startSlideshow() {
-  clearInterval(slideTimer);
+  if (slides.length <= 1) return;
 
-  if (heroSlides.length <= 1) return;
+  clearInterval(slideTimer);
 
   slideTimer = setInterval(() => {
     showSlide(currentSlide + 1);
   }, 5000);
 }
 
-heroDots.forEach(dot => {
+dots.forEach(dot => {
   dot.addEventListener("click", () => {
     const slideNumber = Number(dot.dataset.slide);
+
     showSlide(slideNumber);
     startSlideshow();
   });
@@ -76,7 +73,6 @@ heroDots.forEach(dot => {
 
 showSlide(0);
 startSlideshow();
-
 
 /* ==============================
    BOOKING DATE SETTINGS
@@ -107,7 +103,6 @@ if (checkin && checkout) {
   });
 }
 
-
 /* ==============================
    BOOKING MODAL
 ============================== */
@@ -121,17 +116,15 @@ const smsBooking = document.getElementById("smsBooking");
 
 let bookingMessage = "";
 
-
-/* BOOK NOW LINKS */
+/* OPEN BOOKING FORM FROM BOOK NOW LINKS */
 
 document.querySelectorAll('a[href="#booking"]').forEach(link => {
   link.addEventListener("click", () => {
     if (checkin) {
-      setTimeout(() => checkin.focus(), 500);
+      checkin.focus();
     }
   });
 });
-
 
 /* ==============================
    CHECK AVAILABILITY
@@ -140,11 +133,6 @@ document.querySelectorAll('a[href="#booking"]').forEach(link => {
 if (bookingForm) {
   bookingForm.addEventListener("submit", function(event) {
     event.preventDefault();
-
-    if (!checkin  !checkout  !guests) {
-      alert("Booking form fields are missing.");
-      return;
-    }
 
     const inDate = checkin.value;
     const outDate = checkout.value;
@@ -164,7 +152,10 @@ if (bookingForm) {
       alert("Check-out date must be after check-in date.");
       return;
     }
-     bookingMessage =
+
+    /* CREATE BOOKING MESSAGE */
+
+    bookingMessage =
       "Hello YTECH HOTEL!\n\n" +
       "I would like to make a room reservation.\n\n" +
       "HOTEL: YTECH HOTEL\n" +
@@ -175,26 +166,23 @@ if (bookingForm) {
       "Please confirm room availability and prices.\n\n" +
       "Thank you!";
 
-    if (bookingSummary) {
-      bookingSummary.innerHTML =
-        "<strong>YOUR RESERVATION DETAILS</strong><br>" +
-        "Hotel: YTECH HOTEL<br>" +
-        "Location: Injibara, Ethiopia<br>" +
-        "Check-in: " + inDate + "<br>" +
-        "Check-out: " + outDate + "<br>" +
-        "Guests: " + guestCount;
-    }
+    /* SHOW BOOKING DETAILS */
 
-    if (bookingModal) {
-      bookingModal.classList.add("show");
-      bookingModal.setAttribute("aria-hidden", "false");
-      document.body.style.overflow = "hidden";
-    } else {
-      alert("Booking window is missing from the HTML.");
-    }
+    bookingSummary.innerHTML =
+      "<strong>YOUR RESERVATION DETAILS</strong><br>" +
+      "Hotel: YTECH HOTEL<br>" +
+      "Location: Injibara, Ethiopia<br>" +
+      "Check-in: " + inDate + "<br>" +
+      "Check-out: " + outDate + "<br>" +
+      "Guests: " + guestCount;
+
+    /* OPEN BOOKING OPTIONS */
+
+    bookingModal.classList.add("show");
+    bookingModal.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
   });
 }
-
 
 /* ==============================
    CLOSE BOOKING MODAL
@@ -226,7 +214,6 @@ document.addEventListener("keydown", function(event) {
   }
 });
 
-
 /* ==============================
    WHATSAPP BOOKING
 ============================== */
@@ -244,7 +231,6 @@ if (whatsappBooking) {
     window.open(whatsappURL, "_blank");
   });
 }
-
 
 /* ==============================
    SMS BOOKING
@@ -264,81 +250,6 @@ if (smsBooking) {
   });
 }
 
-
-/* ==============================
-   GALLERY SLIDESHOW
-============================== */
-
-const galleryPhotos = document.querySelectorAll(".gallery-photo");
-const galleryNext = document.getElementById("galleryNext");
-const galleryPrev = document.getElementById("galleryPrev");
-const galleryDotsContainer = document.getElementById("galleryDots");
-
-let galleryIndex = 0;
-let galleryTimer;
-let galleryDotButtons = [];
-
-if (galleryPhotos.length > 0) {
-
-  if (galleryDotsContainer) {
-    galleryPhotos.forEach((photo, index) => {
-      const dot = document.createElement("button");
-
-      dot.className = "gallery-dot";
-      dot.type = "button";
-      dot.setAttribute("aria-label", "Show gallery photo " + (index + 1));
-
-      dot.addEventListener("click", () => {
-        showGalleryPhoto(index);
-        restartGalleryTimer();
-      });
-
-      galleryDotsContainer.appendChild(dot);
-      galleryDotButtons.push(dot);
-    });
-  }
-
-  function showGalleryPhoto(index) {
-    galleryIndex =
-      (index + galleryPhotos.length) % galleryPhotos.length;
-
-    galleryPhotos.forEach((photo, i) => {
-      photo.classList.toggle("active", i === galleryIndex);
-    });
-
-    galleryDotButtons.forEach((dot, i) => {
-      dot.classList.toggle("active", i === galleryIndex);
-    });
-  }
-
-  function restartGalleryTimer() {
-    clearInterval(galleryTimer);
-
-    if (galleryPhotos.length <= 1) return;
-
-    galleryTimer = setInterval(() => {
-      showGalleryPhoto(galleryIndex + 1);
-    }, 5000);
-  }
-
-  if (galleryNext) {
-    galleryNext.addEventListener("click", () => {
-      showGalleryPhoto(galleryIndex + 1);
-      restartGalleryTimer();
-    });
-  }
-   if (galleryPrev) {
-    galleryPrev.addEventListener("click", () => {
-      showGalleryPhoto(galleryIndex - 1);
-      restartGalleryTimer();
-    });
-  }
-
-  showGalleryPhoto(0);
-  restartGalleryTimer();
-}
-
-
 /* ==============================
    FOOTER CURRENT YEAR
 ============================== */
@@ -349,7 +260,30 @@ if (yearElement) {
   yearElement.textContent = new Date().getFullYear();
 }
 
-
 /* ==============================
    END YTECH HOTEL JAVASCRIPT
 ============================== */
+/* GALLERY SLIDE-IN WHEN VISIBLE */
+
+const galleryPhotos = document.querySelectorAll(".gallery-grid img");
+
+const galleryObserver = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+      const photo = entry.target;
+      const index = Array.from(galleryPhotos).indexOf(photo);
+
+      setTimeout(() => {
+        photo.classList.add("show-photo");
+      }, index * 200);
+
+      galleryObserver.unobserve(photo);
+    }
+  });
+}, {
+  threshold: 0.15
+});
+
+galleryPhotos.forEach((photo) => {
+  galleryObserver.observe(photo);
+});
